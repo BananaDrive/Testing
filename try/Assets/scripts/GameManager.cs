@@ -1,9 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject LightSource;
     private LightList LightRotation;
+    public TextMeshProUGUI LightCounter;
+    public int Number = 12;
 
     void Start()
     {
@@ -43,6 +46,14 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             LightRotation.RemovefirstNode();
+            Number -= 1;
+            LightCounter.text = "Light Options: " + Number;
+            
+            if (Number <= 0)
+            {
+                LightCounter.text = "ERROR";
+                LightCounter.color = Color.red;
+            }
         }
     }
 }
