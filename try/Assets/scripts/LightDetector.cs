@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LightDetector : MonoBehaviour
 {
     private Light[] lightSources;
     public float brightnessThreshold = 1f; 
     private float totalBrightness = 0f;
+    public bool Burning = false;
+    public TextMeshProUGUI BrightnessLevel;
 
     private void Start()
     {
@@ -24,17 +27,15 @@ public class LightDetector : MonoBehaviour
             {
                 HandleDirectionalLight(lightSource);
             }
-            else if (lightSource.type == LightType.Point || lightSource.type == LightType.Spot)
-            {
-                HandlePointOrSpotLight(lightSource);
-            }
         }
 
         Debug.Log("Total Brightness: " + totalBrightness);
+        BrightnessLevel.text = "Brightness: " + totalBrightness;
 
         if (totalBrightness > brightnessThreshold)
         {
             Debug.Log("TOO BRIGHT!");
+            Burning = true;
         }
     }
 
@@ -49,31 +50,5 @@ public class LightDetector : MonoBehaviour
         }
     }
 
-    void HandlePointOrSpotLight(Light lightSource)
-    {
-        Vector3 lightDirection = (lightSource.transform.position - transform.position).normalized;
-        float distance = Vector3.Distance(lightSource.transform.position, transform.position);
-
-       
-        if (!Physics.Raycast(lightSource.transform.position, -lightDirection, distance))
-        {
-            float intensity = lightSource.intensity / (distance * distance); 
-
-            
-            if (lightSource.type == LightType.Spot)
-            {
-                float angleToPlayer = Vector3.Angle(lightSource.transform.forward, -lightDirection);
-
-                if (angleToPlayer < lightSource.spotAngle / 2)
-                {
-                    totalBrightness += intensity;
-                }
-            }
-            else
-            {
-                
-                totalBrightness += intensity;
-            }
-        }
-    }
+   
 }
