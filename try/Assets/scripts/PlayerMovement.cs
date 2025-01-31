@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     LightDetector lightDetect;
+    public GameObject LightPad;
    
     public Transform playerCam;
     public Transform orientation;
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        lightDetect = gameObject.GetComponent<LightDetector>();
+        lightDetect = LightPad.GetComponent<LightDetector>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

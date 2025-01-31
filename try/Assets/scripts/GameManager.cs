@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     public GameObject DeathScreen;
     public GameObject playerUI;
 
+    public GameObject Sun;
+    public TextMeshProUGUI SunDegree;
+    public float Degree;
+
     void Start()
     {
         Time.timeScale = 1f;
@@ -26,18 +30,14 @@ public class GameManager : MonoBehaviour
         
 
         LightRotation = new LightList();
-        LightRotation.Add(new Vector3(360, 0, 0));
-        LightRotation.Add(new Vector3(25, 0, 0));
-        LightRotation.Add(new Vector3(45, 0, 0));
-        LightRotation.Add(new Vector3(65, 0, 0));
-        LightRotation.Add(new Vector3(85, 0, 0));
-        LightRotation.Add(new Vector3(105, 0, 0));
-        LightRotation.Add(new Vector3(125, 0, 0));
-        LightRotation.Add(new Vector3(145, 0, 0));
-        LightRotation.Add(new Vector3(165, 0, 0));
-        LightRotation.Add(new Vector3(180, 0, 0));
-        LightRotation.Add(new Vector3(190, 0, 0));
-        LightRotation.Add(new Vector3(270, 0, 0));
+        LightRotation.Add(new Vector3(25, -41, 0));
+        LightRotation.Add(new Vector3(45, -41, 0));
+        LightRotation.Add(new Vector3(65, -41, 0));
+        LightRotation.Add(new Vector3(85, -41, 0));
+        LightRotation.Add(new Vector3(105, -41, 0));
+        LightRotation.Add(new Vector3(125, -41, 0));
+        LightRotation.Add(new Vector3(145, -41, 0));
+        LightRotation.Add(new Vector3(165, -41, 0));
 
         LightRotation.RemovefirstNode();
     }
@@ -53,6 +53,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        Vector3 SunRotate = Sun.transform.rotation.eulerAngles;
+
+        Degree = SunRotate.x;
+
+        SunDegree.text = "Sun Rotation: " + Degree;
+
         if (PlayerRules.Dead == true)
         {
             Death();
@@ -75,6 +81,8 @@ public class GameManager : MonoBehaviour
                 LightCounter.color = Color.red;
             }
         }
+
+
     }
 
     void Death()
